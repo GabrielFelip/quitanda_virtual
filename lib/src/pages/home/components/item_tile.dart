@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quitanda_virtual/src/config/custom_colors.dart';
+import 'package:quitanda_virtual/src/pages/product/product_screen.dart';
 import 'package:quitanda_virtual/src/services/utils_services.dart';
 
 import '../../../models/item_model.dart';
@@ -15,10 +16,20 @@ class ItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Card(
+    return Stack(
+      children: [
+        // Conteúdo
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) {
+                return ProductScreen(
+                  item: item,
+                );
+              }),
+            );
+          },
+          child: Card(
             elevation: 1,
             shadowColor: Colors.grey.shade300,
             shape: RoundedRectangleBorder(
@@ -30,7 +41,9 @@ class ItemTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // Imagem
-                  Expanded(child: Image.asset(item.imgUrl)),
+                  Expanded(
+                      child: Hero(
+                          tag: item.imgUrl, child: Image.asset(item.imgUrl))),
 
                   // Nome
                   Text(
@@ -66,30 +79,32 @@ class ItemTile extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            top: 4,
-            right: 4,
-            child: GestureDetector(
-              onTap: () {},
-              child: Container(
-                height: 40,
-                width: 35,
-                decoration: BoxDecoration(
-                    color: CustomColors.customSwatchColor,
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(15),
-                      topRight: Radius.circular(20),
-                    )),
-                child: const Icon(
-                  Icons.add_shopping_cart_outlined,
-                  color: Colors.white,
-                  size: 20,
-                ),
+        ),
+
+        // Botão de add ao carrinho
+        Positioned(
+          top: 4,
+          right: 4,
+          child: GestureDetector(
+            onTap: () {},
+            child: Container(
+              height: 40,
+              width: 35,
+              decoration: BoxDecoration(
+                  color: CustomColors.customSwatchColor,
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    topRight: Radius.circular(20),
+                  )),
+              child: const Icon(
+                Icons.add_shopping_cart_outlined,
+                color: Colors.white,
+                size: 20,
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
