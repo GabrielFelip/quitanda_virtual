@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:greengrocer/src/config/custom_colors.dart';
 
-import '../../../config/custom_colors.dart';
-
-class CategoryTyle extends StatelessWidget {
-  const CategoryTyle({
+class CategoryTile extends StatelessWidget {
+  const CategoryTile({
     Key? key,
     required this.category,
     required this.isSelected,
@@ -16,21 +15,24 @@ class CategoryTyle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Align(
-        alignment: Alignment.center,
+    return Align(
+      alignment: Alignment.center,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(30),
+        onTap: onPressed,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 6),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color:
-                isSelected ? CustomColors.customSwatchColor : Colors.transparent,
+            color: isSelected
+                ? CustomColors.customSwatchColor
+                : Colors.transparent,
           ),
           child: Text(
             category,
             style: TextStyle(
-              color: isSelected ? Colors.white : CustomColors.customContrastColor,
+              color:
+                  isSelected ? Colors.white : CustomColors.customContrastColor,
               fontWeight: FontWeight.bold,
               fontSize: isSelected ? 16 : 14,
             ),

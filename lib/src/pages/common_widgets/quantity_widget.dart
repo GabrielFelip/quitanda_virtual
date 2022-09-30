@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quitanda_virtual/src/config/custom_colors.dart';
+import 'package:greengrocer/src/config/custom_colors.dart';
 
 class QuantityWidget extends StatelessWidget {
   final int value;
@@ -7,13 +7,13 @@ class QuantityWidget extends StatelessWidget {
   final Function(int quantity) result;
   final bool isRemovable;
 
-  const QuantityWidget(
-      {Key? key,
-      required this.value,
-      required this.suffixText,
-      required this.result,
-      this.isRemovable = false})
-      : super(key: key);
+  const QuantityWidget({
+    Key? key,
+    required this.suffixText,
+    required this.value,
+    required this.result,
+    this.isRemovable = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,17 +24,22 @@ class QuantityWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(50),
         boxShadow: [
           BoxShadow(
-              color: Colors.grey.shade300, spreadRadius: 1, blurRadius: 2),
+            color: Colors.grey.shade300,
+            spreadRadius: 1,
+            blurRadius: 2,
+          ),
         ],
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           _QuantityButton(
-            icon: !isRemovable || value > 1 ? Icons.remove : Icons.delete_forever,
+            icon:
+                !isRemovable || value > 1 ? Icons.remove : Icons.delete_forever,
             color: !isRemovable || value > 1 ? Colors.grey : Colors.red,
             onPressed: () {
               if (value == 1 && !isRemovable) return;
+
               int resultCount = value - 1;
               result(resultCount);
             },
@@ -54,6 +59,7 @@ class QuantityWidget extends StatelessWidget {
             color: CustomColors.customSwatchColor,
             onPressed: () {
               int resultCount = value + 1;
+
               result(resultCount);
             },
           ),

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:quitanda_virtual/src/config/custom_colors.dart';
-import 'package:quitanda_virtual/src/models/cart_item_model.dart';
-import 'package:quitanda_virtual/src/pages/common_widgets/payment_dialog.dart';
-import 'package:quitanda_virtual/src/services/utils_services.dart';
-
-import '../../../models/order_model.dart';
-import 'order_status_widget.dart';
+import 'package:greengrocer/src/models/cart_item_model.dart';
+import 'package:greengrocer/src/models/order_model.dart';
+import 'package:greengrocer/src/pages/common_widgets/payment_dialog.dart';
+import 'package:greengrocer/src/pages/orders/components/order_status_widget.dart';
+import 'package:greengrocer/src/services/utils_services.dart';
 
 class OrderTile extends StatelessWidget {
   final OrderModel order;
 
-  OrderTile({Key? key, required this.order}) : super(key: key);
+  OrderTile({
+    Key? key,
+    required this.order,
+  }) : super(key: key);
 
   final UtilsServices utilsServices = UtilsServices();
 
@@ -24,15 +25,11 @@ class OrderTile extends StatelessWidget {
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
           initiallyExpanded: order.status == 'pending_payment',
-          expandedCrossAxisAlignment: CrossAxisAlignment.start,
           title: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Pedido: ${order.id}',
-                style: const TextStyle(),
-              ),
+              Text('Pedido: ${order.id}'),
               Text(
                 utilsServices.formatDateTime(order.createdDateTime),
                 style: const TextStyle(
@@ -43,6 +40,7 @@ class OrderTile extends StatelessWidget {
             ],
           ),
           childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             IntrinsicHeight(
               child: Row(
@@ -113,18 +111,19 @@ class OrderTile extends StatelessWidget {
                 ),
                 onPressed: () {
                   showDialog(
-                      context: context,
-                      builder: (_) {
-                        return PaymentDialog(
-                          order: order,
-                        );
-                      });
+                    context: context,
+                    builder: (_) {
+                      return PaymentDialog(
+                        order: order,
+                      );
+                    },
+                  );
                 },
                 icon: Image.asset(
                   'assets/app_images/pix.png',
                   height: 18,
                 ),
-                label: const Text("Ver QR Code Pix"),
+                label: const Text('Ver QR Code Pix'),
               ),
             ),
           ],
@@ -157,11 +156,7 @@ class _OrderItemWidget extends StatelessWidget {
             ),
           ),
           Expanded(child: Text(orderItem.item.itemName)),
-          Text(
-            utilsServices.priceToCurrency(
-              orderItem.totalPrice(),
-            ),
-          ),
+          Text(utilsServices.priceToCurrency(orderItem.totalPrice()))
         ],
       ),
     );

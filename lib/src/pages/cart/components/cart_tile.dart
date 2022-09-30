@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:quitanda_virtual/src/models/cart_item_model.dart';
-import 'package:quitanda_virtual/src/pages/common_widgets/quantity_widget.dart';
-import 'package:quitanda_virtual/src/services/utils_services.dart';
-
-import '../../../config/custom_colors.dart';
+import 'package:greengrocer/src/config/custom_colors.dart';
+import 'package:greengrocer/src/models/cart_item_model.dart';
+import 'package:greengrocer/src/pages/common_widgets/quantity_widget.dart';
+import 'package:greengrocer/src/services/utils_services.dart';
 
 class CartTile extends StatefulWidget {
   final CartItemModel cartItem;
@@ -40,7 +39,9 @@ class _CartTileState extends State<CartTile> {
         // Titulo
         title: Text(
           widget.cartItem.item.itemName,
-          style: const TextStyle(fontWeight: FontWeight.w500),
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
         ),
 
         // Total
@@ -61,6 +62,7 @@ class _CartTileState extends State<CartTile> {
               widget.cartItem.quantity = quantity;
 
               if (quantity == 0) {
+                // Remover item do carrinho
                 widget.remove(widget.cartItem);
               }
             });

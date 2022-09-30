@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:greengrocer/src/models/order_model.dart';
+import 'package:greengrocer/src/services/utils_services.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:quitanda_virtual/src/models/order_model.dart';
-import 'package:quitanda_virtual/src/services/utils_services.dart';
 
 class PaymentDialog extends StatelessWidget {
   final OrderModel order;
 
-  PaymentDialog({Key? key, required this.order}) : super(key: key);
+  PaymentDialog({
+    Key? key,
+    required this.order,
+  }) : super(key: key);
 
   final UtilsServices utilsServices = UtilsServices();
 
@@ -37,17 +40,21 @@ class PaymentDialog extends StatelessWidget {
                   ),
                 ),
 
-                // QE Code
+                // QR Code
                 QrImage(
-                  data: "1234567890",
+                  data: "asd654as65da4s6d5a4s6d54",
                   version: QrVersions.auto,
                   size: 200.0,
                 ),
+
                 // Vencimento
                 Text(
-                  "Vencimento: ${utilsServices.formatDateTime(order.overdueDateTime)}",
-                  style: const TextStyle(fontSize: 12),
+                  'Vencimento: ${utilsServices.formatDateTime(order.overdueDateTime)}',
+                  style: const TextStyle(
+                    fontSize: 12,
+                  ),
                 ),
+
                 // Total
                 Text(
                   'Total: ${utilsServices.priceToCurrency(order.total)}',
@@ -56,28 +63,30 @@ class PaymentDialog extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+
                 // Botão copia e cola
                 OutlinedButton.icon(
                   style: OutlinedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      side: const BorderSide(
-                        width: 2,
-                        color: Colors.green,
-                      )),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    side: const BorderSide(
+                      width: 2,
+                      color: Colors.green,
+                    ),
+                  ),
                   onPressed: () {},
                   icon: const Icon(
                     Icons.copy,
                     size: 15,
                   ),
                   label: const Text(
-                    "Copiar código Pix",
+                    'Copiar código Pix',
                     style: TextStyle(
                       fontSize: 13,
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),

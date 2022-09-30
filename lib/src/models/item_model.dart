@@ -1,16 +1,15 @@
-
 class ItemModel {
   String itemName;
   String imgUrl;
   String unit;
-  String price;
+  double price;
   String description;
-  
+
   ItemModel({
-    required this.itemName,
-    required this.imgUrl,
-    required this.unit,
-    required this.price,
     required this.description,
+    required this.imgUrl,
+    required this.itemName,
+    required this.price,
+    required this.unit,
   });
 }

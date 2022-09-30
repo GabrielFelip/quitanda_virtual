@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quitanda_virtual/src/config/custom_colors.dart';
+import 'package:greengrocer/src/config/custom_colors.dart';
 
 class OrderStatusWidget extends StatelessWidget {
   final String status;
@@ -18,8 +18,8 @@ class OrderStatusWidget extends StatelessWidget {
 
   OrderStatusWidget({
     Key? key,
-    required this.status,
     required this.isOverdue,
+    required this.status,
   }) : super(key: key);
 
   @override
@@ -43,19 +43,28 @@ class OrderStatusWidget extends StatelessWidget {
             isActive: true,
             title: 'Pagamento Pix vencido',
             backgroundColor: Colors.red,
-          )
-        ] else ... [
-
-          _StatusDot(isActive: currentStatus >= 2, title: 'Pagamento'),
+          ),
+        ] else ...[
+          _StatusDot(
+            isActive: currentStatus >= 2,
+            title: 'Pagamento',
+          ),
           const _CustomDivider(),
-          _StatusDot(isActive: currentStatus >= 3, title: 'Preparando'),
+          _StatusDot(
+            isActive: currentStatus >= 3,
+            title: 'Preparando',
+          ),
           const _CustomDivider(),
-          _StatusDot(isActive: currentStatus >= 4, title: 'Envio'),
+          _StatusDot(
+            isActive: currentStatus >= 4,
+            title: 'Envio',
+          ),
           const _CustomDivider(),
-          _StatusDot(isActive: currentStatus == 5, title: 'Entregue'),
-          const _CustomDivider(),
-
-        ] 
+          _StatusDot(
+            isActive: currentStatus == 5,
+            title: 'Entregue',
+          ),
+        ],
       ],
     );
   }
@@ -117,17 +126,14 @@ class _StatusDot extends StatelessWidget {
               : const SizedBox.shrink(),
         ),
 
-        // Espaçamento
-        const SizedBox(
-          width: 5,
-        ),
+        const SizedBox(width: 5),
 
         // Texto
         Expanded(
           child: Text(
             title,
             style: const TextStyle(
-              fontSize: 15,
+              fontSize: 12,
             ),
           ),
         ),

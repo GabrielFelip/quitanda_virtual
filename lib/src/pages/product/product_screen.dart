@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:quitanda_virtual/src/config/custom_colors.dart';
-import 'package:quitanda_virtual/src/services/utils_services.dart';
-
-import '../../models/item_model.dart';
-import '../common_widgets/quantity_widget.dart';
+import 'package:greengrocer/src/config/custom_colors.dart';
+import 'package:greengrocer/src/models/item_model.dart';
+import 'package:greengrocer/src/pages/common_widgets/quantity_widget.dart';
+import 'package:greengrocer/src/services/utils_services.dart';
 
 class ProductScreen extends StatefulWidget {
-  const ProductScreen({Key? key, required this.item}) : super(key: key);
+  ProductScreen({
+    Key? key,
+    required this.item,
+  }) : super(key: key);
 
   final ItemModel item;
 
@@ -29,7 +31,10 @@ class _ProductScreenState extends State<ProductScreen> {
           Column(
             children: [
               Expanded(
-                child: Hero(tag: widget.item.imgUrl, child: Image.asset(widget.item.imgUrl)),
+                child: Hero(
+                  tag: widget.item.imgUrl,
+                  child: Image.asset(widget.item.imgUrl),
+                ),
               ),
               Expanded(
                 child: Container(
@@ -58,7 +63,9 @@ class _ProductScreenState extends State<ProductScreen> {
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                  fontSize: 27, fontWeight: FontWeight.bold),
+                                fontSize: 27,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                           QuantityWidget(
@@ -75,9 +82,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
                       // Preço
                       Text(
-                        utilsServices.priceToCurrency(
-                          double.parse(widget.item.price),
-                        ),
+                        utilsServices.priceToCurrency(widget.item.price),
                         style: TextStyle(
                           fontSize: 23,
                           fontWeight: FontWeight.bold,
@@ -113,7 +118,9 @@ class _ProductScreenState extends State<ProductScreen> {
                           label: const Text(
                             'Add no carrinho',
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           icon: const Icon(
                             Icons.shopping_cart_outlined,
@@ -128,10 +135,10 @@ class _ProductScreenState extends State<ProductScreen> {
             ],
           ),
 
-          // Botão de voltar
+          // Botão voltar
           Positioned(
-            top: 10,
             left: 10,
+            top: 10,
             child: SafeArea(
               child: IconButton(
                 onPressed: () => Navigator.of(context).pop(),
