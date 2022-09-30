@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
+import 'package:greengrocer/src/pages/auth/controller/auth_controller.dart';
 import 'package:greengrocer/src/pages/common_widgets/app_name_widget.dart';
 import 'package:greengrocer/src/pages/common_widgets/custom_text_field.dart';
 import 'package:greengrocer/src/pages_routes/app_pages.dart';
@@ -13,6 +14,10 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final _formKey = GlobalKey<FormState>();
+
+    // Controladores
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
 
     return Scaffold(
       backgroundColor: CustomColors.customSwatchColor,
@@ -76,48 +81,65 @@ class SignInScreen extends StatelessWidget {
                     children: [
                       // Email
                       CustomTextField(
+                        controller: emailController,
                         icon: Icons.email,
                         label: 'Email',
                         validador: (email) {
-                          if(email == null || email.isEmpty) return 'Digite seu email!';
-                          if(!email.isEmail) return 'Digite um email válido!';
+                          if (email == null || email.isEmpty)
+                            return 'Digite seu email!';
+                          if (!email.isEmail) return 'Digite um email válido!';
                           return null;
                         },
                       ),
-                
+
                       // Senha
                       CustomTextField(
+                        controller: passwordController,
                         icon: Icons.lock,
                         label: 'Senha',
                         isSecret: true,
                         validador: (password) {
-                          if(password == null || password.isEmpty) return 'Digite uma senha!';
-                          if(password.length < 8) return 'Digite uma senha com pelo menos 8 caracteres';
+                          if (password == null || password.isEmpty)
+                            return 'Digite uma senha!';
+                          if (password.length < 8)
+                            return 'Digite uma senha com pelo menos 8 caracteres';
                           return null;
                         },
                       ),
-                
+
                       // Botão de entrar
                       SizedBox(
                         height: 50,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18),
-                            ),
-                          ),
-                          onPressed: () {
-                            Get.offNamed(PagesRoutes.baseRoute);
+                        child: GetX<AuthController>(
+                          builder: (authController) {
+                            return ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18),
+                                ),
+                              ),
+                              onPressed: authController.isLoading.value
+                                  ? null
+                                  : () {
+                                      FocusScope.of(context).unfocus();
+                                      String email = emailController.text;
+                                      String password = passwordController.text;
+                                      authController.signIn(
+                                          email: email, password: password);
+                                    },
+                              child: authController.isLoading.value
+                                  ? const CircularProgressIndicator()
+                                  : const Text(
+                                      'Entrar',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                            );
                           },
-                          child: const Text(
-                            'Entrar',
-                            style: TextStyle(
-                              fontSize: 18,
-                            ),
-                          ),
                         ),
                       ),
-                
+
                       // Esqueceu a senha
                       Align(
                         alignment: Alignment.centerRight,
@@ -131,7 +153,7 @@ class SignInScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                
+
                       // Divisor
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
@@ -156,7 +178,7 @@ class SignInScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                
+
                       // Botão de novo usuário
                       SizedBox(
                         height: 50,
